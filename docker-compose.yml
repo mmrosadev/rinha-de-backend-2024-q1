@@ -1,0 +1,58 @@
+services:
+  transactions-backend:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: transactions-backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+      - "35729:35729"
+    environment:
+      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASS}
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+      SPRING_DEVTOOLS_LIVERELOAD_ENABLED: "true"
+      JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport"
+    volumes:
+      - .:/app
+    deploy:
+      resources:
+        limits:
+          cpus: "0.9"
+          memory: "300MB"
+
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      # LC_ALL: "en_US.UTF-8"
+      # LC_CTYPE: "en_US.UTF-8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d transactions_control" ]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+      start_period: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.6"
+          memory: "250MB"
+volumes:
+  pgdata:
