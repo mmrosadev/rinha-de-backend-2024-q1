@@ -12,7 +12,7 @@
 	<groupId>br.com</groupId>
 	<artifactId>rinha-de-backend-2024-q1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>transactions.backend</name>
+	<name>rinha-de-backend-2024-q1</name>
 	<description>API to handle transactions and retrieve statements</description>
 	<url/>
 	<licenses>
