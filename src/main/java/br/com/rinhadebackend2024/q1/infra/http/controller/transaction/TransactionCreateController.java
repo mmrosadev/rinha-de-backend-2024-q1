@@ -20,26 +20,26 @@ public class TransactionCreateController {
     public ResponseEntity<Object> createTransaction(
             Long id,
             Transaction transaction
-            ) {
+    ) {
 
         if (Integer.parseInt(String.valueOf(id)) <= 0) {
-            return ResponseEntity.badRequest().body("the value of id must be positive.");
+            return ResponseEntity.unprocessableEntity().body("the value of id must be positive.");
         }
 
         if (transaction == null) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.unprocessableEntity().body("body can't be empty");
         }
 
         if (transaction.getValor() == null || transaction.getValor() <= 0) {
-            return ResponseEntity.badRequest().body("the value of transaction must be positive.");
+            return ResponseEntity.unprocessableEntity().body("the value of transaction must be positive.");
         }
 
         if (transaction.getTipo() != 'c' && transaction.getTipo() != 'd') {
-            return ResponseEntity.badRequest().body("the type of transaction must be 'c' or 'd'.");
+            return ResponseEntity.unprocessableEntity().body("the type of transaction must be 'c' or 'd'.");
         }
 
         if (transaction.getDescricao().isEmpty() || transaction.getDescricao().length() > 10) {
-            return ResponseEntity.badRequest().body("the size of description must be between 1 and 10 characters.");
+            return ResponseEntity.unprocessableEntity().body("the size of description must be between 1 and 10 characters.");
         }
 
         transaction.setClientId(Integer.parseInt(String.valueOf(id)));

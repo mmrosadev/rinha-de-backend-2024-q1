@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -50,20 +50,23 @@ public class TransactionCreateService {
                 client.increaseSaldo(valor);
             }else {
                 if(client.getSaldo() - valor < -client.getLimite()){
-                    return new ResponseEntity<>("There is no limit enough to credit", HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>("There is no limit enough to credit", HttpStatus.UNPROCESSABLE_ENTITY);
                 }
                 client.decreaseSaldo(valor);
             }
 
-            ClientEntity updatedClientEntity = ClientMapper.toEntity(client);
-            this.clientRepository.save(updatedClientEntity);
-
+            clientEntity.get().setSaldo(client.getSaldo());
             TransactionEntity transactionEntity = TransactionMapper.toEntity(transaction);
-            TransactionEntity newTransaction = this.transactionRepository.save(transactionEntity);
+            this.transactionRepository.save(transactionEntity);
+            Map<String, Integer> result = Map.of(
+                    "limite", clientEntity.get().getLimite(),
+                    "saldo", clientEntity.get().getSaldo()
+            );
+
             logger.info("Transaction saved successfully");
-            return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
         }catch (Exception e){
-            logger.error("Failed to save transaction. ", e);
+            logger.error("Failed to save transaction.", e);
             return new ResponseEntity<>("Failed to save transaction. " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
