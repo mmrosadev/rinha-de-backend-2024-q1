@@ -16,7 +16,7 @@ BEGIN
             valor INT NOT NULL,
             tipo CHAR(1) CHECK (tipo IN ('c', 'd')),
             descricao VARCHAR(10) NOT NULL,
-            realizada_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            realizada_em TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE CASCADE
         );
     END IF;

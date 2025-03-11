@@ -20,6 +20,7 @@ services:
       SPRING_DEVTOOLS_RESTART_ENABLED: "true"
       SPRING_DEVTOOLS_LIVERELOAD_ENABLED: "true"
       SPRING_JACKSON_PROPERTY_NAMING_STRATEGY: SNAKE_CASE
+      SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_TIME_ZONE: UTC
       JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport"
     volumes:
       - .:/app
