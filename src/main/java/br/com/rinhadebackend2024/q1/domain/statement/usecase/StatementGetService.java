@@ -1,9 +1,9 @@
 package br.com.rinhadebackend2024.q1.domain.statement.usecase;
 
 import br.com.rinhadebackend2024.q1.domain.statement.entity.Statement;
-import br.com.rinhadebackend2024.q1.domain.transaction.entity.Transaction;
 import br.com.rinhadebackend2024.q1.infra.datasource.database.entities.ClientEntity;
 import br.com.rinhadebackend2024.q1.infra.datasource.database.entities.TransactionEntity;
+import br.com.rinhadebackend2024.q1.infra.dto.TransactionDTO;
 import br.com.rinhadebackend2024.q1.infra.mapper.TransactionMapper;
 import br.com.rinhadebackend2024.q1.infra.repository.clients.ClientRepository;
 import br.com.rinhadebackend2024.q1.infra.repository.transactions.TransactionRepository;
@@ -36,9 +36,9 @@ public class StatementGetService {
         int limite = clientEntity.get().getLimite();
 
         List<TransactionEntity> transactionsEntity = this.transactionRepository.findByClienteIdOrderByRealizadaEmAsc(clientId);
-        List<Transaction> lastTransactions = transactionsEntity
+        List<TransactionDTO> lastTransactions = transactionsEntity
                 .stream()
-                .map(TransactionMapper::toDomain)
+                .map(TransactionMapper::toDTO)
                 .toList();
 
         Statement statement = new Statement(saldo, limite, lastTransactions);

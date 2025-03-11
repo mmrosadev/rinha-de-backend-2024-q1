@@ -2,6 +2,7 @@ package br.com.rinhadebackend2024.q1.infra.mapper;
 
 import br.com.rinhadebackend2024.q1.domain.transaction.entity.Transaction;
 import br.com.rinhadebackend2024.q1.infra.datasource.database.entities.TransactionEntity;
+import br.com.rinhadebackend2024.q1.infra.dto.TransactionDTO;
 
 public class TransactionMapper {
 
@@ -15,7 +16,6 @@ public class TransactionMapper {
         return transactionEntity;
     }
 
-
     public static Transaction toDomain(TransactionEntity transactionEntity){
         Transaction transaction = new Transaction();
         transaction.setId(transactionEntity.getId());
@@ -25,5 +25,15 @@ public class TransactionMapper {
         transaction.setValor(transactionEntity.getValor());
         transaction.setRealizadaEm(transactionEntity.getRealizadaEm());
         return transaction;
+    }
+
+    public static TransactionDTO toDTO(TransactionEntity transactionEntity){
+        TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setClientId(transactionEntity.getClienteId());
+        transactionDTO.setTipo(transactionEntity.getTipo());
+        transactionDTO.setDescricao(transactionEntity.getDescricao());
+        transactionDTO.setValor(transactionEntity.getValor());
+        transactionDTO.setRealizadaEm(transactionEntity.getRealizadaEm());
+        return transactionDTO;
     }
 }
