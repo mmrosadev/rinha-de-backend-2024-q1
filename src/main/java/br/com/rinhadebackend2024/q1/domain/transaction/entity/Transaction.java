@@ -24,4 +24,6 @@ public class Transaction {
         this.descricao = descricao;
         this.realizadaEm = Instant.now();
     }
+
+    public Transaction(){}
 }
