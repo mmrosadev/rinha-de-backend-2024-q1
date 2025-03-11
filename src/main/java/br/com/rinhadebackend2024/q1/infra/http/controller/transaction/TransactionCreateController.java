@@ -22,7 +22,8 @@ public class TransactionCreateController {
             Transaction transaction
     ) {
 
-        if (Integer.parseInt(String.valueOf(id)) <= 0) {
+        int clientId = Integer.parseInt(String.valueOf(id));
+        if (clientId <= 0) {
             return ResponseEntity.unprocessableEntity().body("the value of id must be positive.");
         }
 
@@ -42,8 +43,6 @@ public class TransactionCreateController {
             return ResponseEntity.unprocessableEntity().body("the size of description must be between 1 and 10 characters.");
         }
 
-        transaction.setClientId(Integer.parseInt(String.valueOf(id)));
-
-        return transactionCreateService.createTransaction(transaction);
+        return transactionCreateService.createTransaction(transaction, clientId);
     }
 }

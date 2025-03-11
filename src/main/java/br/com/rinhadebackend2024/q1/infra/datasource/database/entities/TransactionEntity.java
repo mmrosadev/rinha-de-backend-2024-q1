@@ -3,6 +3,8 @@ package br.com.rinhadebackend2024.q1.infra.datasource.database.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,6 +28,7 @@ public class TransactionEntity {
     @Column(name = "descricao", nullable = false)
     private String descricao;
 
-    @Column(name = "realizada_em", nullable = false)
-    private LocalDateTime realizadaEm;
+    @Column(name = "realizada_em", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Convert(disableConversion = true)
+    private Instant realizadaEm;
 }

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,10 +30,12 @@ public class TransactionCreateService {
         this.clientRepository = clientRepository;
     }
 
-    public ResponseEntity<Object> createTransaction(Transaction transaction){
+    public ResponseEntity<Object> createTransaction(Transaction transaction, int clientId){
         try{
 
-            int clientId = transaction.getClientId();
+            transaction.setClientId(clientId);
+            transaction.setRealizadaEm(Instant.now());
+
             Optional<ClientEntity> clientEntity = this.clientRepository.findById(clientId);
 
             if(clientEntity.isEmpty()){
@@ -43,7 +46,6 @@ public class TransactionCreateService {
                     new IllegalArgumentException("Client entity is missing")));
 
             char transactionType = transaction.getTipo();
-
             int valor = transaction.getValor();
 
             if(transactionType == 'c'){
@@ -56,11 +58,13 @@ public class TransactionCreateService {
             }
 
             clientEntity.get().setSaldo(client.getSaldo());
+            this.clientRepository.save(clientEntity.get());
             TransactionEntity transactionEntity = TransactionMapper.toEntity(transaction);
             this.transactionRepository.save(transactionEntity);
+
             Map<String, Integer> result = Map.of(
-                    "limite", clientEntity.get().getLimite(),
-                    "saldo", clientEntity.get().getSaldo()
+                    "limite", client.getLimite(),
+                    "saldo", client.getSaldo()
             );
 
             logger.info("Transaction saved successfully");
