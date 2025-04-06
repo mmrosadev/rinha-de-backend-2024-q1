@@ -21,4 +21,4 @@ Mais informações sobre o problema em: https://github.com/zanfranceschi/rinha-d
 
 ## Documentação Swagger
 
-http://localhost:9999/swagger-ui/index.html#/statement-routes/getStatement
+http://localhost:9999/swagger-ui/index.html
