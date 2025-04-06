@@ -15,8 +15,8 @@ Mais informações sobre o problema em: https://github.com/zanfranceschi/rinha-d
 
 ## Rotas
 
-GET /clientes/{id}/extrato
-POST /clientes/{id}/transacoes
+> GET /clientes/{id}/extrato
+> POST /clientes/{id}/transacoes
 
 ## Documentação Swagger
 
