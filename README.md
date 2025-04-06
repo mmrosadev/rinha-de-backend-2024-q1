@@ -1,24 +1,59 @@
-## Rinha de backend 2024 Q1
+# Rinha de Backend 2024 - Q1
 
-Este repositório apresenta uma solução para o problema proposto pela Rinha de backend 2024 Q1. 
-O problema consiste na criação de uma API para criar transações e recuperar extratos de um determinado cliente. 
-Além desses objetivos, a API deve ser preocupar em ter alta disponibilidade.
+[![Java](https://img.shields.io/badge/Java-17-blue.svg)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.0+-6DB33F.svg)](https://spring.io/projects/spring-boot)
+[![Docker](https://img.shields.io/badge/Docker-Compose-blue)](https://docs.docker.com/compose/)
 
-Para a solução foi construída uma API com Java Spring Boot e para atender o critério de alta disponibilidade, 
-foi utilizado um balanceador de carga por meio da ferramenta NGINX que redireciona as requisições para duas replicas da API.
+This repository presents a solution for the **Rinha de Backend 2024 - Q1** challenge.
 
-Mais informações sobre o problema em: https://github.com/zanfranceschi/rinha-de-backend-2024-q1
+---
 
-## Como rodar a aplicação?
+## Challenge Description
 
-> docker compose up --build
+The challenge consists of implementing a **RESTful API** with the following features:
 
-## Rotas
+- Create financial transactions for customers.
+- Retrieve a customer's statement and current balance.
+- Support high concurrency and availability.
 
-> GET /clientes/{id}/extrato
+More details and rules can be found in the [official challenge repository](https://github.com/zanfranceschi/rinha-de-backend-2024-q1).
 
-> POST /clientes/{id}/transacoes
+---
 
-## Documentação Swagger
+## Technologies Used
 
-http://localhost:9999/swagger-ui/index.html
+- **Java 17**
+- **Spring Boot**
+- **NGINX** (as a load balancer)
+- **Docker & Docker Compose**
+- **Swagger/OpenAPI** for documentation
+- **PostgreSQL** (as the database)
+
+---
+
+## Architecture
+
+The application is composed of:
+
+- 2 replicas of the Spring Boot API.
+- 1 **NGINX** instance acting as a **load balancer**.
+- 1 **PostgreSQL** database instance.
+
+This structure simulates an environment with **high availability and horizontal scalability**.
+
+---
+
+## How to Run the Project
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Running the Application
+
+```bash
+docker compose up --build
+```
+
+The API will be available at: http://localhost:9999
