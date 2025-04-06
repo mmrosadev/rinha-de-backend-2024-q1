@@ -1,4 +1,4 @@
-package br.com.rinhadebackend2024.q1.infra.http;
+package br.com.rinhadebackend2024.q1.infra.http.routers;
 
 import br.com.rinhadebackend2024.q1.infra.http.controller.statement.StatementGetController;
 import org.springframework.http.ResponseEntity;

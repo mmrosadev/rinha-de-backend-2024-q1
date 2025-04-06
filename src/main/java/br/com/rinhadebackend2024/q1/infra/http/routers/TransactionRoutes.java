@@ -1,4 +1,4 @@
-package br.com.rinhadebackend2024.q1.infra.http;
+package br.com.rinhadebackend2024.q1.infra.http.routers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class TransactionRoutes {
     public ResponseEntity<Object> createTransaction(
             @PathVariable Long id,
             @RequestBody Transaction transaction) {
-        
+
         return this.transactionCreateController.createTransaction(id, transaction);
     }
 }
